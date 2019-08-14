@@ -9,25 +9,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <center>
-<head>
-    <title>Registration</title>
-</head>
-<body>
-    Форма регистрации
+    <head>
+        <title>Registration</title>
+    </head>
+    <body>
+    <h3>Form of registration</h3>
     <br>
     <c:set var="message" value='${requestScope["message"]}'/>
     <c:if test="${not empty message}"><p>${message}</p></c:if>
 
     <form action="<c:url value="/registration"/>" method="post">
-        Имя <input type="text" name="firstName"/><br><br>
-        Фамилия <input type="text" name="lastName"/><br><br>
-        Имеил <input type="text" name="email"/><br><br>
-        Пароль <input type="password" name="password"/><br><br>
-        Повторите пароль <input type="password" name="repeatedPassword"/><br><br>
-        <input type="submit">
+        Name <input type="text" name="firstName"/><br><br>
+        Surname <input type="text" name="lastName"/><br><br>
+        Email <input type="text" name="email"/><br><br>
+        Password <input type="password" name="password"/><br><br>
+        Repeat password <input type="password" name="repeatedPassword"/><br><br>
+        <button type="submit">Submit</button>
     </form>
 
-    <a href="index.jsp">Войти в систему</a>
+    <a href="index.jsp">Log in</a>
 </center>
 </body>
 </html>

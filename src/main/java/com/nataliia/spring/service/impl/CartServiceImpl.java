@@ -14,10 +14,15 @@ import java.util.Optional;
 
 @Service
 public class CartServiceImpl implements CartService {
+
+    private final CartDao cartDao;
+    private final GoodDao goodDao;
+
     @Autowired
-    private CartDao cartDao;
-    @Autowired
-    private GoodDao goodDao;
+    public CartServiceImpl(CartDao cartDao, GoodDao goodDao) {
+        this.cartDao = cartDao;
+        this.goodDao = goodDao;
+    }
 
     @Transactional
     @Override
@@ -50,7 +55,7 @@ public class CartServiceImpl implements CartService {
 
     @Transactional
     @Override
-    public void cleanAll(long cartId){
+    public void cleanAll(long cartId) {
         Cart cart = cartDao.findById(cartId);
         cart.resetCart();
         cartDao.update(cart);

@@ -11,7 +11,6 @@ public interface CartService {
 
     Optional<List<Good>> getAll(long cartId);
 
-
     void deleteGoodFromCart(long cartId, long goodId);
 
     void cleanAll(long cartId);

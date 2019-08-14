@@ -3,7 +3,7 @@
 <html>
 <center>
     <head>
-        <title>Users: </title>
+        <title>Users</title>
     </head>
     <body>
 
@@ -32,9 +32,9 @@
     </table>
     </br>
 
-    <a href="<c:url value="/registration"/>">Регистрация</a>
+    <a href="<c:url value="/registration"/>">Registration</a>
     </br>
-    <a href="<c:url value="/good/all"/>">Товары</a>
+    <a href="<c:url value="/good/all"/>">All goods</a>
     </br>
     <a href="<c:url value="/cart/all"/>">Cart</a>
 

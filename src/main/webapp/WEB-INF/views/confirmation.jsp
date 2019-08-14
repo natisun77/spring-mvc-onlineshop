@@ -12,13 +12,13 @@
     <title>The end</title>
 </head>
 <body>
-
+<center>
 <h4>We accepted you order!</h4>
 <h3>Thank you!</h3>
 
 </br>
 </br>
-<a href="<c:url value="/good/all"/>">Начать новый заказ</a>
-
+<a href="<c:url value="/good/all"/>">Star new order</a>
+</center>
 </body>
 </html>

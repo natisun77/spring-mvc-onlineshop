@@ -8,14 +8,17 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class CartDaoImpl implements CartDao {
 
+    private final SessionFactory sessionFactory;
+
     @Autowired
-    private SessionFactory sessionFactory;
+    public CartDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public Cart findById(long id) {
@@ -24,12 +27,12 @@ public class CartDaoImpl implements CartDao {
 
     @Override
     public void update(Cart cart) {
-        sessionFactory.getCurrentSession().update(cart);
+        sessionFactory.getCurrentSession().merge(cart);
     }
 
     @Override
     public List<Good> loadAllGoodsFromCart(Long cartId) {
-        Query<Good> query = sessionFactory.getCurrentSession().createQuery("select g from Cart c join c.goodsInCart g where c.id = :cartId", Good.class);
+        Query<Good> query = sessionFactory.getCurrentSession().createQuery("SELECT g FROM Cart c JOIN c.goodsInCart g WHERE c.id = :cartId", Good.class);
         query.setParameter("cartId", cartId);
         return query.getResultList();
 
@@ -39,5 +42,4 @@ public class CartDaoImpl implements CartDao {
 //        Cart cart = query.getSingleResult();
 //        return cart.getGoodsInCart();
     }
-
 }

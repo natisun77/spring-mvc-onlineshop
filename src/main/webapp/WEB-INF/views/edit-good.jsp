@@ -7,7 +7,7 @@
         <title>Edit Good</title>
     </head>
     <body>
-    <h2> Edit Good</h2>
+    <h2>Edit Good</h2>
 
     <spring:form modelAttribute="good" action="/good/edit" method="post">
         <spring:input path="id" hidden="true"/>

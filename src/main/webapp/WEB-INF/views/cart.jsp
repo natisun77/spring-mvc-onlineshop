@@ -26,7 +26,7 @@
     </br>
     </br>
 
-    <a href="<c:url value="/good/all"/>">Add more goods</a>
+    <a href="<c:url value="/good/all"/>">Add more goods to cart</a>
     </br>
     <a href="<c:url value="/cart/deleteAllGoods"/>">Clean cart</a>
     </br>

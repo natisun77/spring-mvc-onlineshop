@@ -9,12 +9,15 @@ public class UserPayload {
     private Long id;
     private String firstName;
     private String lastName;
+
     @Email
     @NotBlank
     private String email;
+
     @NotNull
     @Size(min = 8)
     private String password;
+
     @NotNull
     @Size(min = 8)
     private String repeatedPassword;

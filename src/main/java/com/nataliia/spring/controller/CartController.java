@@ -18,51 +18,54 @@ import java.util.List;
 @RequestMapping("/cart")
 public class CartController {
 
+    private final CartService cartService;
+
     @Autowired
-    private CartService cartService;
+    public CartController(CartService cartService) {
+        this.cartService = cartService;
+    }
 
     @GetMapping("/addGood")
-    private ModelAndView add(@RequestParam Long goodId, ModelAndView mw, HttpSession httpSession) {
+    private ModelAndView add(@RequestParam Long goodId, ModelAndView modelAndView, HttpSession httpSession) {
         Long userId = (Long) httpSession.getAttribute("userId");
         if (userId != null && cartService.addGoodToCart(userId, goodId)) {
-            mw.setViewName("redirect:/good/all");
+            modelAndView.setViewName("redirect:/good/all");
         } else {
-            mw.setViewName("redirect:login");
+            modelAndView.setViewName("redirect:login");
         }
-
-        return mw;
+        return modelAndView;
     }
 
     @GetMapping("/all")
-    private ModelAndView getAll(ModelAndView mw, HttpSession httpSession) {
+    private ModelAndView getAll(ModelAndView modelAndView, HttpSession httpSession) {
         Long userId = (Long) httpSession.getAttribute("userId");
         if (userId != null) {
             List<Good> goodsInCart = cartService.getAll(userId).orElseGet(Collections::emptyList);
-            mw.addObject("goodsInCart", goodsInCart);
-            mw.setViewName("cart");
+            modelAndView.addObject("goodsInCart", goodsInCart);
+            modelAndView.setViewName("cart");
         } else {
-            mw.setViewName("redirect:/good/all");
+            modelAndView.setViewName("redirect:/good/all");
         }
-        return mw;
+        return modelAndView;
     }
 
     @GetMapping("/deleteGood")
-    private ModelAndView delete(@RequestParam Long goodId, ModelAndView mw, HttpSession httpSession) {
+    private ModelAndView delete(@RequestParam Long goodId, ModelAndView modelAndView, HttpSession httpSession) {
         Long cartId = (Long) httpSession.getAttribute("userId");
         if (cartId != null) {
             cartService.deleteGoodFromCart(cartId, goodId);
         }
-        mw.setViewName("redirect:/cart/all");
-        return mw;
+        modelAndView.setViewName("redirect:/cart/all");
+        return modelAndView;
     }
 
     @GetMapping("/deleteAllGoods")
-    private ModelAndView deleteAll(ModelAndView mw, HttpSession httpSession) {
+    private ModelAndView deleteAll(ModelAndView modelAndView, HttpSession httpSession) {
         Long cartId = (Long) httpSession.getAttribute("userId");
         if (cartId != null) {
             cartService.cleanAll(cartId);
         }
-        mw.setViewName("redirect:/cart/all");
-        return mw;
+        modelAndView.setViewName("redirect:/cart/all");
+        return modelAndView;
     }
 }

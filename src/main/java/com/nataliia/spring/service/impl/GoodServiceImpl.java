@@ -13,8 +13,12 @@ import java.util.Optional;
 @Service
 public class GoodServiceImpl implements GoodService {
 
+    private final GoodDao goodDao;
+
     @Autowired
-    private GoodDao goodDao;
+    public GoodServiceImpl(GoodDao goodDao) {
+        this.goodDao = goodDao;
+    }
 
     @Transactional(readOnly = true)
     @Override

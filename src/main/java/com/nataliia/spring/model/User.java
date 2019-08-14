@@ -1,6 +1,8 @@
 package com.nataliia.spring.model;
 
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +21,8 @@ import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 
+import static javax.persistence.CascadeType.*;
+
 @Entity
 @Table(name = "USERS")
 @NamedEntityGraph(name = "User.roles", attributeNodes = @NamedAttributeNode("roles"))
@@ -28,25 +32,25 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "FIRST_NAME")
+    @Column(name = "first_Name")
     private String firstName;
 
-    @Column(name = "LAST_NAME")
+    @Column(name = "last_Name")
     private String lastName;
 
-    @Column(name = "EMAIL")
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "PASSWORD")
+    @Column(name = "password")
     private String password;
 
-    @ManyToMany(cascade = CascadeType.DETACH)
-    @JoinTable(name = "USERS_TO_ROLES",
-            joinColumns = @JoinColumn(name = "FK_USER_ID"),
-            inverseJoinColumns = @JoinColumn(name = "FK_ROLE_ID"))
+    @ManyToMany(cascade = DETACH)
+    @JoinTable(name = "users_to_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "user")
     private Set<Order> orders  = new HashSet<>();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
@@ -124,5 +128,4 @@ public class User {
         result.setPassword(urp.getPassword());
         return result;
     }
-
 }

@@ -23,52 +23,56 @@ import java.util.Optional;
 @RequestMapping("/user")
 public class UserController {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping("/add")
-    private ModelAndView add(@ModelAttribute User user, ModelAndView mw) {
+    private ModelAndView add(@ModelAttribute User user, ModelAndView modelAndView) {
         userService.add(user);
         List<User> users = userService.getAll().orElseGet(Collections::emptyList);
-        mw.addObject("users", users);
-        mw.setViewName("users");
-        return mw;
+        modelAndView.addObject("users", users);
+        modelAndView.setViewName("users");
+        return modelAndView;
     }
 
     @GetMapping("/all")
-    private ModelAndView getAll(ModelAndView mw) {
+    private ModelAndView getAll(ModelAndView modelAndView) {
         List<User> users = userService.getAll().orElseGet(Collections::emptyList);
-        mw.addObject("users", users);
-        mw.setViewName("users");
-        return mw;
+        modelAndView.addObject("users", users);
+        modelAndView.setViewName("users");
+        return modelAndView;
     }
 
     @GetMapping("/edit")
-    public ModelAndView getUserForUpdate(@RequestParam Long id, ModelAndView mw) {
+    public ModelAndView getUserForUpdate(@RequestParam Long id, ModelAndView modelAndView) {
         Optional<User> user = userService.getById(id);
         user.ifPresentOrElse(u -> {
-            mw.addObject(UserPayload.fromUser(u));
-            mw.setViewName("edit-user");
-        }, () -> mw.setViewName("redirect:/user/all"));
-        return mw;
+            modelAndView.addObject(UserPayload.fromUser(u));
+            modelAndView.setViewName("edit-user");
+        }, () -> modelAndView.setViewName("redirect:/user/all"));
+        return modelAndView;
     }
 
     @PostMapping("/edit")
-    public ModelAndView updateUser(@Valid @ModelAttribute UserPayload userPayload, ModelAndView mw, BindingResult br) {
-        if (br.hasErrors()) {
-            mw.addAllObjects(br.getModel());
-            mw.setViewName("edit-user");
-            return mw;
+    public ModelAndView updateUser(@Valid @ModelAttribute UserPayload userPayload, ModelAndView modelAndView, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            modelAndView.addAllObjects(bindingResult.getModel());
+            modelAndView.setViewName("edit-user");
+            return modelAndView;
         }
         userService.update(userPayload);
-        mw.setViewName("redirect:/user/all");
-        return mw;
+        modelAndView.setViewName("redirect:/user/all");
+        return modelAndView;
     }
 
     @GetMapping("/delete")
-    private ModelAndView delete(@RequestParam Long id, ModelAndView mw) {
+    private ModelAndView delete(@RequestParam Long id, ModelAndView modelAndView) {
         userService.deleteById(id);
-        mw.setViewName("redirect:/user/all");
-        return mw;
+        modelAndView.setViewName("redirect:/user/all");
+        return modelAndView;
     }
 }

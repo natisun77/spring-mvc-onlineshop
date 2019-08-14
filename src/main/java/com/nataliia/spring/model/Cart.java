@@ -14,6 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "carts")
 public class Cart {
+
     @Id
     private Long id;
 
@@ -22,7 +23,7 @@ public class Cart {
     private User user;
 
     @ManyToMany
-    @JoinTable(name = "good_cart",
+    @JoinTable(name = "goods_carts",
             joinColumns = {@JoinColumn(name = "cart_id", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "good_id", nullable = false, updatable = false)})
     private List<Good> goodsInCart;

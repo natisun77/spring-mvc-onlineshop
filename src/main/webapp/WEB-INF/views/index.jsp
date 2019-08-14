@@ -19,12 +19,12 @@
     <form action="login" method="post">
         Имeйл <input type="text" name="email"/></br></br>
         Пароль <input type="password" name="password"/></br></br>
-        <input type="submit" value="Войти">
+        <input type="submit" value="Log in">
     </form>
     <br>
-    Еще не зарегистрированы?
+    Are you still not registered?
     </br>
-    <a href="registration.jsp">Зарегистрироваться</a>
+    <a href="<c:url value="/registration"/>">Registration</a>
 </center>
 
 

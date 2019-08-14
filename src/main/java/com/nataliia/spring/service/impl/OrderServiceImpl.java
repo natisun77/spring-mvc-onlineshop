@@ -1,6 +1,5 @@
 package com.nataliia.spring.service.impl;
 
-import com.nataliia.spring.dao.OrderDao;
 import com.nataliia.spring.dao.UserDao;
 import com.nataliia.spring.model.Cart;
 import com.nataliia.spring.model.Order;
@@ -13,15 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    private OrderDao orderDao;
-    private UserDao userDao;
+    private final UserDao userDao;
 
     @Autowired
-    public OrderServiceImpl(OrderDao orderDao, UserDao userDao) {
-        this.orderDao = orderDao;
+    public OrderServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
-
 
     @Override
     @Transactional
@@ -33,8 +29,6 @@ public class OrderServiceImpl implements OrderService {
         Cart cart = user.getCart();
 
         order.getGoodsInOrder().addAll(cart.getGoodsInCart());
-//        order.setAddress(address);
-//        order.setFormOfPayment();
 
         order.setUser(user);
         user.getOrders().add(order);

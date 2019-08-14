@@ -13,13 +13,17 @@ import java.util.List;
 @Repository
 public class GoodDaoImpl implements GoodDao {
 
+    private final SessionFactory sessionFactory;
+
     @Autowired
-    private SessionFactory sessionFactory;
+    public GoodDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public List<Good> findAllGoods() {
         @SuppressWarnings("unchecked")
-        TypedQuery<Good> query = sessionFactory.getCurrentSession().createQuery("from Good");
+        TypedQuery<Good> query = sessionFactory.getCurrentSession().createQuery("FROM Good");
         return query.getResultList();
     }
 
@@ -28,20 +32,19 @@ public class GoodDaoImpl implements GoodDao {
         return sessionFactory.getCurrentSession().find(Good.class, id);
     }
 
-
     @Override
     public void save(Good good) {
-        sessionFactory.getCurrentSession().save(good);
+        sessionFactory.getCurrentSession().persist(good);
     }
 
     @Override
     public void update(Good good) {
-        sessionFactory.getCurrentSession().update(good);
+        sessionFactory.getCurrentSession().merge(good);
     }
 
     @Override
     public void deleteById(Long id) {
-        Query query = sessionFactory.getCurrentSession().createQuery("delete Good g where g.id = :id");
+        Query query = sessionFactory.getCurrentSession().createQuery("DELETE Good g WHERE g.id = :id");
         query.setParameter("id", id);
         query.executeUpdate();
     }

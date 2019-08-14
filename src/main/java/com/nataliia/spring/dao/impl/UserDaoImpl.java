@@ -14,12 +14,16 @@ import java.util.Optional;
 @Repository
 public class UserDaoImpl implements UserDao {
 
+    private final SessionFactory sessionFactory;
+
     @Autowired
-    private SessionFactory sessionFactory;
+    public UserDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public List<User> findAllUsers() {
-        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User", User.class);
+        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("FROM User", User.class);
         return query.getResultList();
     }
 
@@ -30,7 +34,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> findByEmailAndPassword(String email, String password) {
-        String sql = "from User u where u.email = :email and u.password = :password";
+        String sql = "FROM User u WHERE u.email = :email AND u.password = :password";
         Query<User> query = sessionFactory.getCurrentSession().createQuery(sql, User.class);
         query.setParameter("email", email);
         query.setParameter("password", password);
@@ -40,17 +44,17 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void add(User user) {
-        sessionFactory.getCurrentSession().save(user);
+        sessionFactory.getCurrentSession().persist(user);
     }
 
     @Override
     public void update(User user) {
-        sessionFactory.getCurrentSession().update(user);
+        sessionFactory.getCurrentSession().merge(user);
     }
 
     @Override
     public void deleteById(Long id) {
-        Query query = sessionFactory.getCurrentSession().createQuery("delete User u where u.id = :id");
+        Query query = sessionFactory.getCurrentSession().createQuery("DELETE User u WHERE u.id = :id");
         query.setParameter("id", id);
         query.executeUpdate();
     }

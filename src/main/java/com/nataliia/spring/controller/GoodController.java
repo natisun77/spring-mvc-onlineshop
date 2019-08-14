@@ -22,60 +22,64 @@ import java.util.Optional;
 @RequestMapping("/good")
 public class GoodController {
 
+    private final GoodService goodService;
+
     @Autowired
-    private GoodService goodService;
+    public GoodController(GoodService goodService) {
+        this.goodService = goodService;
+    }
 
     @GetMapping("/add")
-    public ModelAndView register(ModelAndView mw) {
-        mw.addObject("good", new Good());
-        mw.setViewName("add-good");
-        return mw;
+    public ModelAndView register(ModelAndView modelAndView) {
+        modelAndView.addObject("good", new Good());
+        modelAndView.setViewName("add-good");
+        return modelAndView;
     }
 
     @PostMapping("/add")
-    private ModelAndView add(@ModelAttribute Good good, ModelAndView mw) {
+    private ModelAndView add(@ModelAttribute Good good, ModelAndView modelAndView) {
         goodService.add(good);
         List<Good> goods = goodService.getAll().orElseGet(Collections::emptyList);
-        mw.addObject("goods", goods);
-        mw.setViewName("goods");
-        return mw;
+        modelAndView.addObject("goods", goods);
+        modelAndView.setViewName("goods");
+        return modelAndView;
     }
 
 
     @GetMapping("/all")
-    private ModelAndView getAll(ModelAndView mw) {
+    private ModelAndView getAll(ModelAndView modelAndView) {
         List<Good> goods = goodService.getAll().orElseGet(Collections::emptyList);
-        mw.addObject("goods", goods);
-        mw.setViewName("goods");
-        return mw;
+        modelAndView.addObject("goods", goods);
+        modelAndView.setViewName("goods");
+        return modelAndView;
     }
 
     @GetMapping("/edit")
-    public ModelAndView getGoodForUpdate(@RequestParam Long id, ModelAndView mw) {
+    public ModelAndView getGoodForUpdate(@RequestParam Long id, ModelAndView modelAndView) {
         Optional<Good> good = goodService.getById(id);
         good.ifPresentOrElse(g -> {
-            mw.addObject(g);
-            mw.setViewName("edit-good");
-        }, () -> mw.setViewName("redirect:good/all"));
-        return mw;
+            modelAndView.addObject(g);
+            modelAndView.setViewName("edit-good");
+        }, () -> modelAndView.setViewName("redirect:good/all"));
+        return modelAndView;
     }
 
     @PostMapping("/edit")
-    public ModelAndView updateUser(@Valid @ModelAttribute Good good, ModelAndView mw, BindingResult br) {
-        if (br.hasErrors()) {
-            mw.addAllObjects(br.getModel());
-            mw.setViewName("edit-good");
-            return mw;
+    public ModelAndView updateUser(@Valid @ModelAttribute Good good, ModelAndView modelAndView, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            modelAndView.addAllObjects(bindingResult.getModel());
+            modelAndView.setViewName("edit-good");
+            return modelAndView;
         }
         goodService.update(good);
-        mw.setViewName("redirect:/good/all");
-        return mw;
+        modelAndView.setViewName("redirect:/good/all");
+        return modelAndView;
     }
 
     @GetMapping("/delete")
-    private ModelAndView delete(@RequestParam Long id, ModelAndView mw) {
+    private ModelAndView delete(@RequestParam Long id, ModelAndView modelAndView) {
         goodService.deleteById(id);
-        mw.setViewName("redirect:/good/all");
-        return mw;
+        modelAndView.setViewName("redirect:/good/all");
+        return modelAndView;
     }
 }

@@ -23,25 +23,24 @@ public class Order {
     private long id;
 
     @ManyToOne
-    @JoinTable(name = "USERS_TO_ORDERS",
-            joinColumns = @JoinColumn(name = "FK_ORDER_ID"),
-            inverseJoinColumns = @JoinColumn(name = "FK_USER_ID"))
+    @JoinTable(name = "orders_to_users",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private User user;
 
     @ManyToMany
-    @JoinTable(name = "good_order",
+    @JoinTable(name = "orders_to_goods",
             joinColumns = {@JoinColumn(name = "order_id", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "good_id", nullable = false, updatable = false)})
     private List<Good> goodsInOrder = new ArrayList<>();
 
-    @Column(name = "ADDRESS")
+    @Column(name = "address")
     private String address;
 
-    @Column(name = "FORM_OF_PAYMENT")
+    @Column(name = "formOfPayment")
     private String formOfPayment;
 
     public Order() {
-
     }
 
     public long getId() {
