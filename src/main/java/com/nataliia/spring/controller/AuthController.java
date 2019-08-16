@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -47,17 +46,6 @@ public class AuthController {
     @GetMapping("/login")
     public ModelAndView login(ModelAndView modelAndView) {
         modelAndView.setViewName("index");
-        return modelAndView;
-    }
-
-    @PostMapping("/login")
-    public ModelAndView login(@ModelAttribute User user, ModelAndView modelAndView, HttpSession httpSession) {
-        userService.getUserByEmailAndPassword(
-                user.getEmail(), user.getPassword())
-                .ifPresentOrElse(u -> {
-                    httpSession.setAttribute("userId", u.getId());
-                    modelAndView.setViewName("redirect:user/all");
-                }, () -> modelAndView.setViewName("index"));
         return modelAndView;
     }
 }

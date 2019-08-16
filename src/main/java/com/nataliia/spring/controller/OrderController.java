@@ -2,9 +2,13 @@ package com.nataliia.spring.controller;
 
 import com.nataliia.spring.model.Good;
 import com.nataliia.spring.model.Order;
+import com.nataliia.spring.model.User;
 import com.nataliia.spring.service.CartService;
 import com.nataliia.spring.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,30 +35,19 @@ public class OrderController {
     }
 
     @GetMapping("/add")
-    public ModelAndView register(ModelAndView modelAndView, HttpSession httpSession) {
-        Long cartId = (Long) (httpSession.getAttribute("userId"));
-        if (cartId != null) {
-            List<Good> goods = cartService.getAll(cartId).orElse(Collections.emptyList());
-            modelAndView.addObject("goodsSize", goods.size());
-            modelAndView.addObject("totalAmount", goods.stream().mapToDouble(Good::getPrice).sum());
-            modelAndView.addObject("order", new Order());
-            modelAndView.setViewName("order");
-        } else {
-            modelAndView.setViewName("cart");
-        }
+    public ModelAndView register(ModelAndView modelAndView, @AuthenticationPrincipal User user) {
+        List<Good> goods = cartService.getAll(user.getId()).orElse(Collections.emptyList());
+        modelAndView.addObject("goodsSize", goods.size());
+        modelAndView.addObject("totalAmount", goods.stream().mapToDouble(Good::getPrice).sum());
+        modelAndView.addObject("order", new Order());
+        modelAndView.setViewName("order");
         return modelAndView;
     }
 
     @PostMapping("/add")
-    private ModelAndView add(@ModelAttribute Order order, ModelAndView modelAndView, HttpSession httpSession) {
-        Long userId = (Long) httpSession.getAttribute("userId");
-
-        if (userId != null) {
-            orderService.addOrder(order, userId);
-            modelAndView.setViewName("confirmation");
-        } else {
-            modelAndView.setViewName("redirect:/cart");
-        }
+    private ModelAndView add(@ModelAttribute Order order, ModelAndView modelAndView, @AuthenticationPrincipal User user) {
+        orderService.addOrder(order, user.getId());
+        modelAndView.setViewName("confirmation");
         return modelAndView;
     }
 }

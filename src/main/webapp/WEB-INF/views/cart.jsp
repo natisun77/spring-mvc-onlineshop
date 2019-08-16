@@ -31,6 +31,7 @@
     <a href="<c:url value="/cart/deleteAllGoods"/>">Clean cart</a>
     </br>
     <a href="<c:url value="/order/add"/>">Make order</a>
+
 </center>
 
 

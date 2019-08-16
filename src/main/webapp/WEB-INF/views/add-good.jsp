@@ -9,13 +9,13 @@
 <center>
     <spring:form modelAttribute="good" action="/good/add" method="post">
         <label for="name">Name</label>
-        <spring:input path="name" id="name"/>
+        <spring:input path="name" id="name"/><br><br>
         <label for="description">Description</label>
-        <spring:input path="description" id="description"/>
+        <spring:input path="description" id="description"/><br><br>
         <label for="price">Price</label>
-        <spring:input path="price" id="price"/>
+        <spring:input path="price" id="price"/><br><br>
         <button type="submit">Submit</button>
-    </spring:form>>
+    </spring:form>
 </center>
 </body>
 </html>

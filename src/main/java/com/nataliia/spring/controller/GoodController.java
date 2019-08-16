@@ -45,7 +45,6 @@ public class GoodController {
         return modelAndView;
     }
 
-
     @GetMapping("/all")
     private ModelAndView getAll(ModelAndView modelAndView) {
         List<Good> goods = goodService.getAll().orElseGet(Collections::emptyList);

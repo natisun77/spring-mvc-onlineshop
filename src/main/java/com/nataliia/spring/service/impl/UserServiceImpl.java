@@ -2,16 +2,14 @@ package com.nataliia.spring.service.impl;
 
 import com.nataliia.spring.dao.UserDao;
 import com.nataliia.spring.model.Cart;
-import com.nataliia.spring.model.Role;
 import com.nataliia.spring.model.User;
 import com.nataliia.spring.model.UserPayload;
 import com.nataliia.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,9 +18,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
 
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Autowired
-    public UserServiceImpl(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDao = userDao;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Transactional(readOnly = true)
@@ -34,10 +35,11 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void add(User user) {
-        user.setRoles(new HashSet<>(Collections.singletonList(Role.ofUser())));
+        user.setRole("user");
         Cart cart = new Cart();
         cart.setUser(user);
         user.setCart(cart);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
         userDao.add(user);
     }
@@ -72,6 +74,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> getById(Long id) {
         return Optional.ofNullable(userDao.findById(id));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<User> getByEmail(String email) {
+        return Optional.ofNullable(userDao.findByEmail(email));
     }
 
     @Transactional(readOnly = true)
