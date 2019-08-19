@@ -35,12 +35,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .usernameParameter("email")
                 .loginPage("/login")
-                .defaultSuccessUrl("/good/all")
+                .defaultSuccessUrl("/product/all")
                 .failureUrl("/login")
                 .and()
                 .authorizeRequests()
                 .antMatchers("/login", "/registration", "/resources/**").permitAll()
-                .antMatchers("/user/**", "/good/add", "/good/edit", "/good/delete").hasRole("admin")
+                .antMatchers("/user/**", "/product/add", "/product/edit", "/product/delete").hasRole("admin")
                 .anyRequest().hasAnyRole("user", "admin");
     }
 }

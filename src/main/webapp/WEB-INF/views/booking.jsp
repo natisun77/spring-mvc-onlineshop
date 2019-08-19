@@ -3,20 +3,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Order</title>
+    <title>Booking</title>
 </head>
 <body>
 <center>
 
-    <h2>In your order "${goodsSize}" goods.</h2>
+    <h2>In your booking "${productsSize}" products.</h2>
     </br>
 
-    <h2>Total sum is: "${ totalAmount}" goods.</h2>
+    <h2>Total sum is: "${ totalAmount}" usd.</h2>
     </br>
 
 
     </br>
-    <spring:form modelAttribute="order" action="/order/add" method="post">
+    <spring:form modelAttribute="booking" action="/booking/add" method="post">
         <label for="address">Address</label>
         <spring:input path="address" id="address"/></br>
 
@@ -30,9 +30,9 @@
     </br>
     </br>
     </br>
-    <a href="<c:url value="/order/delete"/>">Cancel order</a>
+    <a href="<c:url value="/booking/delete"/>">Cancel booking</a>
     </br>
-    <a href="<c:url value="/good/all"/>">Add more goods</a>
+    <a href="<c:url value="/product/all"/>">Add more products</a>
     </br>
 </center>
 

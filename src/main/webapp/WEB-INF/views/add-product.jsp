@@ -3,11 +3,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Add good</title>
+    <title>Add product</title>
 </head>
 <body>
 <center>
-    <spring:form modelAttribute="good" action="/good/add" method="post">
+    <spring:form modelAttribute="product" action="/product/add" method="post">
         <label for="name">Name</label>
         <spring:input path="name" id="name"/><br><br>
         <label for="description">Description</label>

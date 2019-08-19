@@ -1,7 +1,7 @@
 package com.nataliia.spring.dao;
 
 import com.nataliia.spring.model.Cart;
-import com.nataliia.spring.model.Good;
+import com.nataliia.spring.model.Product;
 
 import java.util.List;
 
@@ -11,6 +11,6 @@ public interface CartDao {
 
     void update(Cart cart);
 
-    List<Good> loadAllGoodsFromCart(Long id);
+    List<Product> loadAllProductsFromCart(Long id);
 
 }

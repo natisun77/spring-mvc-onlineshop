@@ -3,11 +3,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Goods</title>
+    <title>Products</title>
 </head>
 <body>
 <center>
-    <h2>All Goods:</h2>
+    <h2>All Products:</h2>
     <table border="1">
         <tr>
             <th>Name</th>
@@ -19,16 +19,16 @@
             </security:authorize>
             <th>Add to Cart</th>
         </tr>
-        <c:forEach var="good" items="${goods}">
+        <c:forEach var="product" items="${products}">
             <tr>
-                <td><c:out value="${good.name}"/></td>
-                <td><c:out value="${good.description}"/></td>
-                <td><c:out value="${good.price}"/></td>
+                <td><c:out value="${product.name}"/></td>
+                <td><c:out value="${product.description}"/></td>
+                <td><c:out value="${product.price}"/></td>
                 <security:authorize access="hasRole('admin')">
-                <td><a href="<c:url value="/good/edit?id=${good.id}"/>">edit</a></td>
-                <td><a href="<c:url value="/good/delete?id=${good.id}"/>">delete</a></td>
+                <td><a href="<c:url value="/product/edit?id=${product.id}"/>">edit</a></td>
+                <td><a href="<c:url value="/product/delete?id=${product.id}"/>">delete</a></td>
                 </security:authorize>
-                <td><a href="<c:url value="/cart/addGood?goodId=${good.id}"/>">add to cart</a></td>
+                <td><a href="<c:url value="/cart/addProduct?productId=${product.id}"/>">add to cart</a></td>
             </tr>
         </c:forEach>
     </table>
@@ -39,7 +39,7 @@
     <br>
 
     <security:authorize access="hasRole('admin')">
-        <a href="<c:url value="/good/add"/>">Add goods</a>
+        <a href="<c:url value="/product/add"/>">Add products</a>
         <br>
         <a href="<c:url value="/user/all"/>">List of users</a>
     </security:authorize>

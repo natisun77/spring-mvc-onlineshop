@@ -4,12 +4,12 @@
 <html>
 <center>
     <head>
-        <title>Edit Good</title>
+        <title>Edit Product</title>
     </head>
     <body>
-    <h2>Edit Good</h2>
+    <h2>Edit Product</h2>
 
-    <spring:form modelAttribute="good" action="/good/edit" method="post">
+    <spring:form modelAttribute="product" action="/product/edit" method="post">
         <spring:input path="id" hidden="true"/>
 
         <label for="name">Name</label>

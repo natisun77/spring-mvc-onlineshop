@@ -14,23 +14,23 @@
             <th>Price</th>
             <th>delete</th>
         </tr>
-        <c:forEach var="good" items="${goodsInCart}">
+        <c:forEach var="product" items="${productsInCart}">
             <tr>
-                <td><c:out value="${good.name}"/></td>
-                <td><c:out value="${good.description}"/></td>
-                <td><c:out value="${good.price}"/></td>
-                <td><a href="<c:url value="/cart/deleteGood?goodId=${good.id}"/>">delete</a></td>
+                <td><c:out value="${product.name}"/></td>
+                <td><c:out value="${product.description}"/></td>
+                <td><c:out value="${product.price}"/></td>
+                <td><a href="<c:url value="/cart/deleteProduct?productId=${product.id}"/>">delete</a></td>
             </tr>
         </c:forEach>
     </table>
     </br>
     </br>
 
-    <a href="<c:url value="/good/all"/>">Add more goods to cart</a>
+    <a href="<c:url value="/product/all"/>">Add more products to cart</a>
     </br>
-    <a href="<c:url value="/cart/deleteAllGoods"/>">Clean cart</a>
+    <a href="<c:url value="/cart/deleteAllProducts"/>">Clean cart</a>
     </br>
-    <a href="<c:url value="/order/add"/>">Make order</a>
+    <a href="<c:url value="/booking/add"/>">Make booking</a>
 
 </center>
 

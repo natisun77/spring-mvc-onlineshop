@@ -13,12 +13,12 @@
 </head>
 <body>
 <center>
-<h4>We accepted you order!</h4>
+<h4>We accepted you booking!</h4>
 <h3>Thank you!</h3>
 
 </br>
 </br>
-<a href="<c:url value="/good/all"/>">Star new order</a>
+<a href="<c:url value="/product/all"/>">Star new booking</a>
 </center>
 </body>
 </html>

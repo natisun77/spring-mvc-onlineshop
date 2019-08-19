@@ -34,7 +34,7 @@
 
     <a href="<c:url value="/registration"/>">Registration</a>
     </br>
-    <a href="<c:url value="/good/all"/>">All goods</a>
+    <a href="<c:url value="/product/all"/>">All products</a>
     </br>
     <a href="<c:url value="/cart/all"/>">Cart</a>
 

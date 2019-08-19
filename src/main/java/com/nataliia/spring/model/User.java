@@ -22,17 +22,17 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "first_Name")
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_Name")
+    @Column(name = "last_name")
     private String lastName;
 
     @Column(name = "email")
@@ -45,7 +45,7 @@ public class User implements UserDetails {
     private String role;
 
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "user")
-    private Set<Order> orders = new HashSet<>();
+    private Set<Booking> bookings = new HashSet<>();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     private Cart cart;
@@ -98,12 +98,12 @@ public class User implements UserDetails {
         this.role = role;
     }
 
-    public Set<Order> getOrders() {
-        return orders;
+    public Set<Booking> getBookings() {
+        return bookings;
     }
 
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
+    public void setBookings(Set<Booking> bookings) {
+        this.bookings = bookings;
     }
 
     public Cart getCart() {

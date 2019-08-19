@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "carts")
+@Table(name = "cart")
 public class Cart {
 
     @Id
@@ -23,19 +23,19 @@ public class Cart {
     private User user;
 
     @ManyToMany
-    @JoinTable(name = "goods_carts",
+    @JoinTable(name = "product_cart",
             joinColumns = {@JoinColumn(name = "cart_id", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "good_id", nullable = false, updatable = false)})
-    private List<Good> goodsInCart;
+            inverseJoinColumns = {@JoinColumn(name = "product_id", nullable = false, updatable = false)})
+    private List<Product> productsInCart;
 
     public Cart() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -47,24 +47,24 @@ public class Cart {
         this.user = user;
     }
 
-    public List<Good> getGoodsInCart() {
-        return goodsInCart;
+    public List<Product> getProductsInCart() {
+        return productsInCart;
     }
 
-    public void setGoodsInCart(List<Good> goodsInCart) {
-        this.goodsInCart = goodsInCart;
+    public void setProductsInCart(List<Product> productsInCart) {
+        this.productsInCart = productsInCart;
     }
 
-    public void addGood(Good good) {
-        goodsInCart.add(good);
+    public void addProduct(Product product) {
+        productsInCart.add(product);
     }
 
-    public void deleteGood(Good good) {
-        goodsInCart.remove(good);
+    public void deleteProduct(Product product) {
+        productsInCart.remove(product);
     }
 
     public void resetCart() {
-        goodsInCart.clear();
+        productsInCart.clear();
     }
 
     @Override

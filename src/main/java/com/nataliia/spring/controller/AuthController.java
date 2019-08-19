@@ -31,7 +31,8 @@ public class AuthController {
     }
 
     @PostMapping(value = "/registration")
-    public ModelAndView register(@Valid @ModelAttribute UserPayload userPayload, BindingResult bindingResult, ModelAndView modelAndView) {
+    public ModelAndView register(@Valid @ModelAttribute UserPayload userPayload,
+                                 BindingResult bindingResult, ModelAndView modelAndView) {
         if (bindingResult.hasErrors()) {
             modelAndView.addAllObjects(bindingResult.getModel());
             modelAndView.setViewName("registration");
