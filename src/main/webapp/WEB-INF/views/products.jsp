@@ -14,8 +14,8 @@
             <th>Description</th>
             <th>Price</th>
             <security:authorize access="hasRole('admin')">
-            <th>Edit</th>
-            <th>Delete</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </security:authorize>
             <th>Add to Cart</th>
         </tr>
@@ -25,8 +25,8 @@
                 <td><c:out value="${product.description}"/></td>
                 <td><c:out value="${product.price}"/></td>
                 <security:authorize access="hasRole('admin')">
-                <td><a href="<c:url value="/product/edit?id=${product.id}"/>">edit</a></td>
-                <td><a href="<c:url value="/product/delete?id=${product.id}"/>">delete</a></td>
+                    <td><a href="<c:url value="/product/edit?id=${product.id}"/>">edit</a></td>
+                    <td><a href="<c:url value="/product/delete?id=${product.id}"/>">delete</a></td>
                 </security:authorize>
                 <td><a href="<c:url value="/cart/addProduct?productId=${product.id}"/>">add to cart</a></td>
             </tr>
@@ -34,20 +34,13 @@
     </table>
     <br>
     <br>
-
     <a href="<c:url value="/cart/all"/>">Cart</a>
     <br>
-
     <security:authorize access="hasRole('admin')">
         <a href="<c:url value="/product/add"/>">Add products</a>
         <br>
         <a href="<c:url value="/user/all"/>">List of users</a>
     </security:authorize>
-
-
-
 </center>
-
-
 </body>
 </html>
