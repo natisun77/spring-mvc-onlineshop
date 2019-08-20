@@ -1,17 +1,17 @@
 package com.nataliia.spring.service;
 
-import com.nataliia.spring.model.Good;
+import com.nataliia.spring.model.Product;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface CartService {
 
-    boolean addGoodToCart(long cartId, long goodId);
+    boolean addProductToCart(long cartId, long productId);
 
-    Optional<List<Good>> getAll(long cartId);
+    Optional<List<Product>> getAll(long cartId);
 
-    void deleteGoodFromCart(long cartId, long goodId);
+    void deleteProductFromCart(long cartId, long productId);
 
     void cleanAll(long cartId);
 }

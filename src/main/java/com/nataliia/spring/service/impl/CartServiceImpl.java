@@ -1,9 +1,9 @@
 package com.nataliia.spring.service.impl;
 
 import com.nataliia.spring.dao.CartDao;
-import com.nataliia.spring.dao.GoodDao;
+import com.nataliia.spring.dao.ProductDao;
 import com.nataliia.spring.model.Cart;
-import com.nataliia.spring.model.Good;
+import com.nataliia.spring.model.Product;
 import com.nataliia.spring.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,40 +16,40 @@ import java.util.Optional;
 public class CartServiceImpl implements CartService {
 
     private final CartDao cartDao;
-    private final GoodDao goodDao;
+    private final ProductDao productDao;
 
     @Autowired
-    public CartServiceImpl(CartDao cartDao, GoodDao goodDao) {
+    public CartServiceImpl(CartDao cartDao, ProductDao productDao) {
         this.cartDao = cartDao;
-        this.goodDao = goodDao;
+        this.productDao = productDao;
     }
 
     @Transactional
     @Override
-    public boolean addGoodToCart(long cartId, long goodId) {
+    public boolean addProductToCart(long cartId, long productId) {
         Cart cart = cartDao.findById(cartId);
         if (cart == null) {
             return false;
         }
-        Good good = new Good();
-        good.setId(goodId);
-        cart.addGood(good);
+        Product product = new Product();
+        product.setId(productId);
+        cart.addProduct(product);
         cartDao.update(cart);
         return true;
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Optional<List<Good>> getAll(long cartId) {
-        return Optional.of(cartDao.loadAllGoodsFromCart(cartId));
+    public Optional<List<Product>> getAll(long cartId) {
+        return Optional.of(cartDao.loadAllProductsFromCart(cartId));
     }
 
     @Transactional
     @Override
-    public void deleteGoodFromCart(long cartId, long goodId) {
+    public void deleteProductFromCart(long cartId, long productId) {
         Cart cart = cartDao.findById(cartId);
-        Good good = goodDao.findById(goodId);
-        cart.deleteGood(good);
+        Product product = productDao.findById(productId);
+        cart.deleteProduct(product);
         cartDao.update(cart);
     }
 

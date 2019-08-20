@@ -58,7 +58,8 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public ModelAndView updateUser(@Valid @ModelAttribute UserPayload userPayload, ModelAndView modelAndView, BindingResult bindingResult) {
+    public ModelAndView updateUser(@Valid @ModelAttribute UserPayload userPayload,
+                                   ModelAndView modelAndView, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             modelAndView.addAllObjects(bindingResult.getModel());
             modelAndView.setViewName("edit-user");

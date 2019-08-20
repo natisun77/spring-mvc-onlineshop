@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "orders")
-public class Order {
+@Table(name = "booking")
+public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,24 +23,24 @@ public class Order {
     private long id;
 
     @ManyToOne
-    @JoinTable(name = "orders_to_users",
-            joinColumns = @JoinColumn(name = "order_id"),
+    @JoinTable(name = "booking_to_user",
+            joinColumns = @JoinColumn(name = "booking_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private User user;
 
     @ManyToMany
-    @JoinTable(name = "orders_to_goods",
-            joinColumns = {@JoinColumn(name = "order_id", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "good_id", nullable = false, updatable = false)})
-    private List<Good> goodsInOrder = new ArrayList<>();
+    @JoinTable(name = "booking_to_product",
+            joinColumns = {@JoinColumn(name = "booking_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "product_id", nullable = false, updatable = false)})
+    private List<Product> productsInBooking = new ArrayList<>();
 
     @Column(name = "address")
     private String address;
 
-    @Column(name = "formOfPayment")
+    @Column(name = "form_of_payment")
     private String formOfPayment;
 
-    public Order() {
+    public Booking() {
     }
 
     public long getId() {
@@ -59,12 +59,12 @@ public class Order {
         this.user = user;
     }
 
-    public List<Good> getGoodsInOrder() {
-        return goodsInOrder;
+    public List<Product> getProductsInBooking() {
+        return productsInBooking;
     }
 
-    public void setGoodsInOrder(List<Good> goodsInOrder) {
-        this.goodsInOrder = goodsInOrder;
+    public void setProductsInBooking(List<Product> productsInBooking) {
+        this.productsInBooking = productsInBooking;
     }
 
     public String getAddress() {
@@ -88,20 +88,21 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Order order = (Order) o;
+        Booking booking = (Booking) o;
 
-        if (id != order.id) return false;
-        if (user != null ? !user.equals(order.user) : order.user != null) return false;
-        if (goodsInOrder != null ? !goodsInOrder.equals(order.goodsInOrder) : order.goodsInOrder != null) return false;
-        if (address != null ? !address.equals(order.address) : order.address != null) return false;
-        return formOfPayment != null ? formOfPayment.equals(order.formOfPayment) : order.formOfPayment == null;
+        if (id != booking.id) return false;
+        if (user != null ? !user.equals(booking.user) : booking.user != null) return false;
+        if (productsInBooking != null ? !productsInBooking.equals(booking.productsInBooking) : booking.productsInBooking != null)
+            return false;
+        if (address != null ? !address.equals(booking.address) : booking.address != null) return false;
+        return formOfPayment != null ? formOfPayment.equals(booking.formOfPayment) : booking.formOfPayment == null;
     }
 
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (user != null ? user.hashCode() : 0);
-        result = 31 * result + (goodsInOrder != null ? goodsInOrder.hashCode() : 0);
+        result = 31 * result + (productsInBooking != null ? productsInBooking.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (formOfPayment != null ? formOfPayment.hashCode() : 0);
         return result;

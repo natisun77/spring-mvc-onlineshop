@@ -1,6 +1,5 @@
 package com.nataliia.spring.service;
 
-
 import com.nataliia.spring.model.User;
 import com.nataliia.spring.model.UserPayload;
 
@@ -18,6 +17,8 @@ public interface UserService {
     void update(User user);
 
     Optional<User> getById(Long id);
+
+    Optional<User> getByEmail(String email);
 
     Optional<User> getUserByEmailAndPassword(String email, String password);
 

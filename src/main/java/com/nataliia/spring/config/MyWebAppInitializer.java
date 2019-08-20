@@ -8,7 +8,7 @@ public class MyWebAppInitializer extends
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{RootConfig.class};
+        return new Class[]{WebSecurityConfig.class, RootConfig.class};
     }
 
     @Override

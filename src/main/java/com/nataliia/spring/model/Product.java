@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "goods")
-public class Good {
+@Table(name = "product")
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,17 +25,17 @@ public class Good {
     @Column(name = "price")
     private double price;
 
-    public Good() {
+    public Product() {
     }
 
-    public Good(long id, String name, String description, double price) {
+    public Product(long id, String name, String description, double price) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
     }
 
-    public Good(String name, String description, double price) {
+    public Product(String name, String description, double price) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -78,11 +78,11 @@ public class Good {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Good good = (Good) o;
+        Product product = (Product) o;
 
-        if (Double.compare(good.price, price) != 0) return false;
-        if (name != null ? !name.equals(good.name) : good.name != null) return false;
-        return description != null ? description.equals(good.description) : good.description == null;
+        if (Double.compare(product.price, price) != 0) return false;
+        if (name != null ? !name.equals(product.name) : product.name != null) return false;
+        return description != null ? description.equals(product.description) : product.description == null;
     }
 
     @Override
@@ -98,7 +98,7 @@ public class Good {
 
     @Override
     public String toString() {
-        return "Good{" +
+        return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +

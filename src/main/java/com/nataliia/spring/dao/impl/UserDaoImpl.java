@@ -33,6 +33,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public User findByEmail(String email) {
+        String sql = "FROM User u WHERE u.email = :email";
+        Query<User> query = sessionFactory.getCurrentSession().createQuery(sql, User.class);
+        query.setParameter("email", email);
+        return query.getSingleResult();
+    }
+
+    @Override
     public Optional<User> findByEmailAndPassword(String email, String password) {
         String sql = "FROM User u WHERE u.email = :email AND u.password = :password";
         Query<User> query = sessionFactory.getCurrentSession().createQuery(sql, User.class);

@@ -1,7 +1,9 @@
 package com.nataliia.spring.model;
 
 
-import org.hibernate.annotations.Cascade;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,32 +12,27 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedAttributeNode;
-import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import static javax.persistence.CascadeType.*;
-
 @Entity
-@Table(name = "USERS")
-@NamedEntityGraph(name = "User.roles", attributeNodes = @NamedAttributeNode("roles"))
-public class User {
+@Table(name = "user")
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "first_Name")
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_Name")
+    @Column(name = "last_name")
     private String lastName;
 
     @Column(name = "email")
@@ -44,14 +41,11 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(cascade = DETACH)
-    @JoinTable(name = "users_to_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    @Column(name = "role")
+    private String role;
 
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "user")
-    private Set<Order> orders  = new HashSet<>();
+    private Set<Booking> bookings = new HashSet<>();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     private Cart cart;
@@ -96,20 +90,20 @@ public class User {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public String getRole() {
+        return "ROLE_" + role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(String role) {
+        this.role = role;
     }
 
-    public Set<Order> getOrders() {
-        return orders;
+    public Set<Booking> getBookings() {
+        return bookings;
     }
 
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
+    public void setBookings(Set<Booking> bookings) {
+        this.bookings = bookings;
     }
 
     public Cart getCart() {
@@ -118,6 +112,38 @@ public class User {
 
     public void setCart(Cart cart) {
         this.cart = cart;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> list = new ArrayList<>();
+        list.add(new SimpleGrantedAuthority(getRole()));
+        return list;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public static User of(UserPayload urp) {

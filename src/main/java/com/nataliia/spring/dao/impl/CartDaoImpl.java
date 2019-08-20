@@ -2,7 +2,7 @@ package com.nataliia.spring.dao.impl;
 
 import com.nataliia.spring.dao.CartDao;
 import com.nataliia.spring.model.Cart;
-import com.nataliia.spring.model.Good;
+import com.nataliia.spring.model.Product;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +31,11 @@ public class CartDaoImpl implements CartDao {
     }
 
     @Override
-    public List<Good> loadAllGoodsFromCart(Long cartId) {
-        Query<Good> query = sessionFactory.getCurrentSession().createQuery("SELECT g FROM Cart c JOIN c.goodsInCart g WHERE c.id = :cartId", Good.class);
+    public List<Product> loadAllProductsFromCart(Long cartId) {
+        Query<Product> query = sessionFactory.getCurrentSession()
+                .createQuery("SELECT p FROM Cart c JOIN c.productsInCart p " +
+                        "WHERE c.id = :cartId", Product.class);
         query.setParameter("cartId", cartId);
         return query.getResultList();
-
-//        Query<Cart> query = sessionFactory.getCurrentSession()
-//                .createQuery("from Cart c join fetch c.goodsInCart where c.id = :cartId", Cart.class);
-//        query.setParameter("cartId", cartId);
-//        Cart cart = query.getSingleResult();
-//        return cart.getGoodsInCart();
     }
 }
